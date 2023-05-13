@@ -6,7 +6,7 @@
 /*   By: mamazzal <mamazzal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/13 13:23:09 by mamazzal          #+#    #+#             */
-/*   Updated: 2023/05/13 22:30:23 by mamazzal         ###   ########.fr       */
+/*   Updated: 2023/05/13 22:37:25 by mamazzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,5 +23,5 @@ void printf_actions(char *msg, struct timeval tv, int t_id) {
 
 void print_eat(struct timeval tv, int t_id, s_philo *p_data) {
 	gettimeofday(p_data->tv_last_eat, NULL);
-	printf("%lld\t%d     is eating\n", get_actiocn_time(tv), t_id);
+	printf("%lld\t%d     is eating\n", get_action_time(tv), t_id);
 }
