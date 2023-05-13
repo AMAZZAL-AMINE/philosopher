@@ -6,7 +6,7 @@
 /*   By: mamazzal <mamazzal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/13 13:31:40 by mamazzal          #+#    #+#             */
-/*   Updated: 2023/05/13 20:25:53 by mamazzal         ###   ########.fr       */
+/*   Updated: 2023/05/13 22:57:44 by mamazzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,6 @@ void greate_sleep(int time) {
     long long start = current_time;
     
     while (get_current_time() < (start + time)) {
-        usleep(50);
+        usleep(100);
     }
 }

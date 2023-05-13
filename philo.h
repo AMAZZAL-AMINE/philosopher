@@ -6,7 +6,7 @@
 /*   By: mamazzal <mamazzal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 13:54:10 by mamazzal          #+#    #+#             */
-/*   Updated: 2023/05/13 21:42:59 by mamazzal         ###   ########.fr       */
+/*   Updated: 2023/05/13 23:47:55 by mamazzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,12 +31,10 @@ typedef struct s_philo
     struct timeval *tv_cretaed_at;
     struct timezone *tz_cretaed_at;
     struct timeval *tv_last_eat;
+    int is_dead;
 } s_philo;
 
-typedef struct s_time {
-    struct timezone *tz;
-    struct timeval  *tv;
-} *p_time;
+
 
 int ft_atoi(const char *str);
 void error_msg(char *msg);

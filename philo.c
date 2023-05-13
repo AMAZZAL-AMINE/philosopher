@@ -6,7 +6,7 @@
 /*   By: mamazzal <mamazzal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 14:03:22 by mamazzal          #+#    #+#             */
-/*   Updated: 2023/05/13 22:36:39 by mamazzal         ###   ########.fr       */
+/*   Updated: 2023/05/13 23:56:45 by mamazzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,8 @@ void *philo_routin(void *input) {
 	pthread_mutex_t right_fork = p_data->forks[p_data->p_id];
 	pthread_mutex_t left_fork =  p_data->forks[(p_data->p_id + 1) % p_data->n_philos];
 	while (1) {
-		printf_actions("is thinking", *p_data->tv_cretaed_at, p_data->p_id);
 		pthread_mutex_lock(&right_fork);
+		printf_actions("is thinking", *p_data->tv_cretaed_at, p_data->p_id);
 		printf_actions("has taken a fork", *p_data->tv_cretaed_at, p_data->p_id);
 		pthread_mutex_lock(&left_fork);
 		printf_actions("has taken a fork", *p_data->tv_cretaed_at, p_data->p_id);
@@ -42,11 +42,11 @@ void *philo_routin(void *input) {
 		pthread_mutex_unlock(&left_fork);
 		printf_actions("is sleeping", *p_data->tv_cretaed_at, p_data->p_id);
 		greate_sleep(p_data->n_time_sleep);
-		pthread_mutex_unlock(&right_fork);
-		pthread_mutex_lock(&right_fork);
-		if ((get_current_time() - time_to_millscnd(*p_data->tv_last_eat)) >= p_data->n_time_die) {
-			printf_actions("died", *p_data->tv_cretaed_at, p_data->p_id);
-			exit(1);
+		if ((get_current_time() - time_to_millscnd(*p_data->tv_last_eat)) > p_data->n_time_die) {
+			pthread_mutex_lock(&right_fork);
+			p_data->is_dead = 1;
+			pthread_mutex_unlock(&right_fork);
+			return NULL;
 		}
 		pthread_mutex_unlock(&right_fork);
 	}
@@ -81,6 +81,9 @@ int	create_reight_forks(s_philo *p_data) {
 	return 0;
 }
 
+void check_is_dead() {
+	
+}
 void time_to_dinner(char **argv, s_philo *p_data) {
 	set_value_struct(argv, p_data);
 	create_reight_forks(p_data);
@@ -92,7 +95,13 @@ int main(int argc, char **argv) {
 		error_msg("Error : Argments");
 	}
 	s_philo *p_data = malloc(sizeof(s_philo) * ft_atoi(argv[1])); 
-	time_to_dinner(argv, p_data);
+	while (1) {
+		if (p_data->is_dead == 1) {
+			printf("is dead");
+			exit(0);
+		}
+		time_to_dinner(argv, p_data);
+	}
 	free(p_data);
 	return 0;
 }
