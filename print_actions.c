@@ -6,7 +6,7 @@
 /*   By: mamazzal <mamazzal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/13 13:23:09 by mamazzal          #+#    #+#             */
-/*   Updated: 2023/05/13 22:37:25 by mamazzal         ###   ########.fr       */
+/*   Updated: 2023/05/15 17:57:06 by mamazzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,12 @@ long long get_action_time(struct timeval tv) {
 	return (get_current_time() - time_in_mills);
 }
 
-void printf_actions(char *msg, struct timeval tv, int t_id) {
-	printf("%lld\t%d     %s\n", get_action_time(tv), t_id, msg);
+void printf_actions(char *msg,  s_philo *p_data) {
+	long long c_time = (get_current_time() - p_data->data->start_time);
+	int	id = p_data->p_id;
+	printf("%lld\t%d     %s\n", c_time, id, msg);
 }
 
-void print_eat(struct timeval tv, int t_id, s_philo *p_data) {
-	gettimeofday(p_data->tv_last_eat, NULL);
-	printf("%lld\t%d     is eating\n", get_action_time(tv), t_id);
+void print_eat(int t_id, s_philo *p_data) {
+	printf("%lld\t%d     is eating\n", (get_current_time() - p_data->data->start_time), t_id);
 }

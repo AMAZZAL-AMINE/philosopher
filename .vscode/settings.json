@@ -2,6 +2,7 @@
     "files.associations": {
         "philosopher.h": "c",
         "philo.h": "c",
-        "time.h": "c"
+        "time.h": "c",
+        "_select.h": "c"
     }
 }
