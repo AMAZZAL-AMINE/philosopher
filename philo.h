@@ -6,7 +6,7 @@
 /*   By: mamazzal <mamazzal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 13:54:10 by mamazzal          #+#    #+#             */
-/*   Updated: 2023/05/15 17:25:10 by mamazzal         ###   ########.fr       */
+/*   Updated: 2023/05/16 17:36:10 by mamazzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,26 +29,20 @@ typedef struct s_data
     long long start_time;
     pthread_mutex_t exit_lock;
     pthread_mutex_t print_lock;
-} s_data;
+} s_shared_source;
 
 typedef struct s_philo
 {
     int p_id;
     pthread_t philo;
-    pthread_mutex_t fork;
+    pthread_mutex_t mutex;
+    pthread_mutex_t left_mutex;
     long long created_at;
-    struct timeval tv_last_eat;
+    long long last_eat;
     int is_dead;
-    s_data *data;
+    s_shared_source *data;
 } s_philo;
 
 int ft_atoi(const char *str);
-void error_msg(char *msg);
-long long get_current_time();
-long long get_time_millsec();
-void greate_sleep(int time, s_philo *p_data);
-void print_eat(int t_id, s_philo *p_data);
-void printf_actions(char *msg, s_philo *p_data) ;
-long long time_to_millscnd(struct timeval tv);
 
 #endif
