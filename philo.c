@@ -6,7 +6,7 @@
 /*   By: mamazzal <mamazzal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 14:03:22 by mamazzal          #+#    #+#             */
-/*   Updated: 2023/05/17 15:33:01 by mamazzal         ###   ########.fr       */
+/*   Updated: 2023/05/18 11:30:37 by mamazzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,39 +26,54 @@ void sleep_time(int time) {
     }
 }
 
-int print_action(char *msg, s_philo *philo) {
+void print_action(char *msg, s_philo *philo) {
     pthread_mutex_lock(&philo->data->print_lock);
     long time = get_current_time() - philo->created_at;
     printf("%ld %d %s\n", time, philo->p_id, msg);
     pthread_mutex_unlock(&philo->data->print_lock);
-    return 0;
 }
 
-int print_eat(s_philo *philo) {
-    pthread_mutex_lock(&philo->data->print_lock);
+void print_eat(s_philo *philo) {
     long time = get_current_time() - philo->created_at;
+    // pthread_mutex_lock(&philo->data->print_lock);
     philo->last_eat = get_current_time();
     printf("%ld %d is eating\n", time, philo->p_id);
-    pthread_mutex_unlock(&philo->data->print_lock);
+    sleep_time(philo->data->n_time_eat);
+    // pthread_mutex_unlock(&philo->data->print_lock);
+}
+void print_sleep(s_philo *philo) {
+    long time = get_current_time() - philo->created_at;
+    // pthread_mutex_lock(&philo->data->print_lock);
+    philo->last_eat = get_current_time();
+    printf("%ld %d is eating\n", time, philo->p_id);
+    sleep_time(philo->data->n_time_eat);
+    // pthread_mutex_unlock(&philo->data->print_lock);
+}
+
+int philo_todo(s_philo *philo) {
+    pthread_mutex_lock(&philo->data->mutex[philo->left_mutex]);
+    print_action("has taken a fork", philo);
+    pthread_mutex_lock(&philo->data->mutex[philo->right_mutex]);
+    print_action("has taken a fork", philo);
+    print_eat(philo);
+    pthread_mutex_unlock(&philo->data->mutex[philo->right_mutex]);
+    pthread_mutex_unlock(&philo->data->mutex[philo->left_mutex]);
+    
+    print_action("is sleeping", philo);
+    sleep_time(philo->data->n_time_sleep);
+    print_action("is thinking", philo);
     return 0;
 }
 
 void *philo_routine(void *data) {
     s_philo *philo = (s_philo *)data;
-    while (1) {
-        pthread_mutex_t right_mutex = philo->mutex;
-        pthread_mutex_t left_mutex = philo->left_mutex;
+    if (philo->p_id % 2 != 0) {
         print_action("is thinking", philo);
-        pthread_mutex_lock(&right_mutex);
-        print_action("has taken a fork", philo);
-        pthread_mutex_lock(&left_mutex);
-        print_action("has taken a fork", philo);
-        print_eat(philo);
         sleep_time(philo->data->n_time_eat);
-        pthread_mutex_unlock(&left_mutex);
-        pthread_mutex_unlock(&right_mutex);
-        print_action("is sleeping", philo);
-        sleep_time(philo->data->n_time_sleep);
+    }
+    while (1) {
+       if (philo_todo(philo) == 1)
+           return NULL;
     }
     return NULL;
 }
@@ -69,12 +84,15 @@ int start_dinner(char **argv, s_philo *philo) {
     philo->data->n_time_eat = ft_atoi(argv[3]);
     philo->data->n_time_sleep = ft_atoi(argv[4]);
     philo->data->start_time = get_current_time();
+    philo->data->mutex = malloc(sizeof(pthread_mutex_t) * philo->data->n_philos);
+    
     pthread_mutex_init(&philo->data->print_lock, NULL);
     pthread_mutex_init(&philo->data->exit_lock, NULL);
+    pthread_mutex_init(&philo->data->lock, NULL);
     int count = 0;
     //create right mutex
     while (count < philo->data->n_philos) {
-        pthread_mutex_init(&philo[count].mutex, NULL);
+        pthread_mutex_init(&philo->data->mutex[count], NULL);
         count++;
     }
 
@@ -82,8 +100,10 @@ int start_dinner(char **argv, s_philo *philo) {
     count = 0;
     while (count < philo->data->n_philos) {
         philo[count].p_id = count + 1;
+        philo[count].left_mutex = count;
+        philo[count].right_mutex = (count + 1) % philo->data->n_philos;
+
         philo[count].created_at = get_current_time();
-        philo[count].left_mutex = philo[(philo[count].p_id + 1) % philo->data->n_philos].mutex;
         pthread_create(&philo[count].philo, NULL, philo_routine, &philo[count]);
         count++;
     }

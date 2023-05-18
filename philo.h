@@ -6,7 +6,7 @@
 /*   By: mamazzal <mamazzal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 13:54:10 by mamazzal          #+#    #+#             */
-/*   Updated: 2023/05/16 17:36:10 by mamazzal         ###   ########.fr       */
+/*   Updated: 2023/05/18 11:19:54 by mamazzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,14 +29,16 @@ typedef struct s_data
     long long start_time;
     pthread_mutex_t exit_lock;
     pthread_mutex_t print_lock;
+    pthread_mutex_t lock;
+    pthread_mutex_t *mutex;
 } s_shared_source;
 
 typedef struct s_philo
 {
     int p_id;
     pthread_t philo;
-    pthread_mutex_t mutex;
-    pthread_mutex_t left_mutex;
+    int left_mutex;
+    int right_mutex;
     long long created_at;
     long long last_eat;
     int is_dead;
