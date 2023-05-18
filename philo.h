@@ -6,7 +6,7 @@
 /*   By: mamazzal <mamazzal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 13:54:10 by mamazzal          #+#    #+#             */
-/*   Updated: 2023/05/18 11:19:54 by mamazzal         ###   ########.fr       */
+/*   Updated: 2023/05/18 17:42:21 by mamazzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 #include <pthread.h>
 #include <sys/time.h>
 #include <string.h>
+#include <stdbool.h>
 
 
 typedef struct s_data
@@ -41,7 +42,7 @@ typedef struct s_philo
     int right_mutex;
     long long created_at;
     long long last_eat;
-    int is_dead;
+    bool is_dead;
     s_shared_source *data;
 } s_philo;
 

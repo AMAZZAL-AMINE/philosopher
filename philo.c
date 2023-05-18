@@ -6,7 +6,7 @@
 /*   By: mamazzal <mamazzal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 14:03:22 by mamazzal          #+#    #+#             */
-/*   Updated: 2023/05/18 16:07:02 by mamazzal         ###   ########.fr       */
+/*   Updated: 2023/05/18 18:27:19 by mamazzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,14 +32,6 @@ void print_action(char *msg, s_philo *philo) {
 }
 
 void print_eat(s_philo *philo) {
-    pthread_mutex_unlock(&philo->data->print_lock);
-    long time = get_current_time() - philo->created_at;
-    philo->last_eat = get_current_time();
-    printf("%ld %d is eating\n", time, philo->p_id);
-    sleep_time(philo->data->n_time_eat);
-    pthread_mutex_lock(&philo->data->print_lock);
-}
-void print_sleep(s_philo *philo) {
     long time = get_current_time() - philo->created_at;
     philo->last_eat = get_current_time();
     printf("%ld %d is eating\n", time, philo->p_id);
@@ -125,7 +117,7 @@ int main(int argc, char **argv) {
     while (1) {
         count = 0;
         while (count < philo->data->n_philos) {
-            if (philo[count].data->n_time_die < (get_current_time() - philo[count].last_eat)) {
+            if (philo->data->n_time_die < (get_current_time() - philo[count].last_eat)) {
                 print_action("died", &philo[count]);
                 exit(0);
             }
