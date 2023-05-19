@@ -6,7 +6,7 @@
 /*   By: mamazzal <mamazzal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 14:03:22 by mamazzal          #+#    #+#             */
-/*   Updated: 2023/05/18 18:27:19 by mamazzal         ###   ########.fr       */
+/*   Updated: 2023/05/19 22:38:45 by mamazzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,10 @@ void print_eat(s_philo *philo) {
 int philo_todo(s_philo *philo) {
     pthread_mutex_lock(&philo->data->mutex[philo->left_mutex]);
     print_action("has taken a fork", philo);
+    if (philo->data->n_philos == 1) {
+        philo->is_dead = 1;
+        return 1;
+    }
     pthread_mutex_lock(&philo->data->mutex[philo->right_mutex]);
     print_action("has taken a fork", philo);
     print_eat(philo);
@@ -49,6 +53,10 @@ int philo_todo(s_philo *philo) {
     print_action("is sleeping", philo);
     sleep_time(philo->data->n_time_sleep);
     print_action("is thinking", philo);
+    if ((get_current_time() - philo->last_eat) > philo->data->n_time_die) {
+        philo->is_dead = 1;
+        return 1;
+    }
     return 0;
 }
 
@@ -64,6 +72,7 @@ void *philo_routine(void *data) {
     }
     return ((void *)0);
 }
+
 
 int start_dinner(char **argv, s_philo *philo) {
     philo->data->n_philos = ft_atoi(argv[1]);
@@ -117,7 +126,7 @@ int main(int argc, char **argv) {
     while (1) {
         count = 0;
         while (count < philo->data->n_philos) {
-            if (philo->data->n_time_die < (get_current_time() - philo[count].last_eat)) {
+            if (philo[count].is_dead == 1) {
                 print_action("died", &philo[count]);
                 exit(0);
             }
