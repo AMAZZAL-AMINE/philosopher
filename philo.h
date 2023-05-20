@@ -6,7 +6,7 @@
 /*   By: mamazzal <mamazzal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 13:54:10 by mamazzal          #+#    #+#             */
-/*   Updated: 2023/05/18 17:42:21 by mamazzal         ###   ########.fr       */
+/*   Updated: 2023/05/20 20:31:27 by mamazzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,10 +42,16 @@ typedef struct s_philo
     int right_mutex;
     long long created_at;
     long long last_eat;
-    bool is_dead;
+    int is_dead;
     s_shared_source *data;
 } s_philo;
 
 int ft_atoi(const char *str);
+long long get_current_time();
+void sleep_time(int time);
+void print_action(char *msg, s_philo *philo);
+void print_eat(s_philo *philo);
+int philo_todo(s_philo *philo);
+void *philo_routine(void *data);
 
 #endif
