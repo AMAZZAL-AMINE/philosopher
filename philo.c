@@ -6,13 +6,14 @@
 /*   By: mamazzal <mamazzal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 14:03:22 by mamazzal          #+#    #+#             */
-/*   Updated: 2023/05/20 22:08:52 by mamazzal         ###   ########.fr       */
+/*   Updated: 2023/05/21 21:54:51 by mamazzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
 int start_dinner(char **argv, s_philo *philo) {
+    philo->data->is_dead = 0;
     philo->data->n_philos = ft_atoi(argv[1]);
     philo->data->n_time_die = ft_atoi(argv[2]);
     philo->data->n_time_eat = ft_atoi(argv[3]);
@@ -59,13 +60,14 @@ int main(int argc, char **argv) {
         philo[count].data = source;
         count++;
     }
-     start_dinner(argv, philo);
+    start_dinner(argv, philo);
     while (1) {
         count = 0;
         while (count < philo->data->n_philos) {
             if ((get_current_time() - philo[count].last_eat) > (philo->data->n_time_die)) {
                 philo[count].is_dead = 1;
                 print_action("died",philo);
+                philo->data->is_dead = 1;
                 return 1;
             }
             count++;
