@@ -6,7 +6,7 @@
 /*   By: mamazzal <mamazzal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 13:54:10 by mamazzal          #+#    #+#             */
-/*   Updated: 2023/05/21 21:49:23 by mamazzal         ###   ########.fr       */
+/*   Updated: 2023/05/21 22:07:31 by mamazzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,5 +54,6 @@ void print_action(char *msg, s_philo *philo);
 void print_eat(s_philo *philo);
 int philo_todo(s_philo *philo);
 void *philo_routine(void *data);
+void print_died(char *msg, s_philo *philo);
 
 #endif

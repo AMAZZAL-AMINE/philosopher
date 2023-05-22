@@ -6,7 +6,7 @@
 /*   By: mamazzal <mamazzal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/20 19:09:52 by mamazzal          #+#    #+#             */
-/*   Updated: 2023/05/20 22:04:57 by mamazzal         ###   ########.fr       */
+/*   Updated: 2023/05/22 16:59:40 by mamazzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,15 @@ void *philo_routine(void *data) {
         print_action("is thinking", philo);
         sleep_time(philo->data->n_time_eat);
     }
-    while (philo->is_dead != 1) {
-       philo_todo(philo);
+    while (philo->data->is_dead != 1) {
+        if ((get_current_time() - philo->last_eat) > (philo->data->n_time_die)){
+            philo->data->is_dead = 1;
+            print_died("died", philo);
+            philo->is_dead = 1;
+            return ((void *)1);
+        }
+      if (philo_todo(philo) == 1)
+        return ((void *)1);
     }
     return ((void *)1);
 }

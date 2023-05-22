@@ -6,7 +6,7 @@
 /*   By: mamazzal <mamazzal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 14:03:22 by mamazzal          #+#    #+#             */
-/*   Updated: 2023/05/21 21:54:51 by mamazzal         ###   ########.fr       */
+/*   Updated: 2023/05/22 16:59:27 by mamazzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,7 @@ int start_dinner(char **argv, s_philo *philo) {
     philo->data->start_time = get_current_time();
     philo->data->mutex = malloc(sizeof(pthread_mutex_t) * philo->data->n_philos);
     pthread_mutex_init(&philo->data->print_lock, NULL);
-    pthread_mutex_init(&philo->data->exit_lock, NULL);
-    pthread_mutex_init(&philo->data->lock, NULL);
-    
+    // pthread_mutex_init(&philo->data->exit_lock, NULL);
     /**
      * MUTEXS
      */
@@ -60,19 +58,18 @@ int main(int argc, char **argv) {
         philo[count].data = source;
         count++;
     }
+
     start_dinner(argv, philo);
-    while (1) {
+    while (philo->data->is_dead == 0) {
         count = 0;
         while (count < philo->data->n_philos) {
-            if ((get_current_time() - philo[count].last_eat) > (philo->data->n_time_die)) {
-                philo[count].is_dead = 1;
-                print_action("died",philo);
-                philo->data->is_dead = 1;
-                return 1;
+            if (philo[count].is_dead) {
+                break;
             }
             count++;
         }
     }
+
     count = 0;
     while (count < philo->data->n_philos) {
         pthread_join(philo[count].philo, NULL);
