@@ -6,7 +6,7 @@
 /*   By: mamazzal <mamazzal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 13:54:10 by mamazzal          #+#    #+#             */
-/*   Updated: 2023/05/21 22:07:31 by mamazzal         ###   ########.fr       */
+/*   Updated: 2023/05/23 15:20:15 by mamazzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ typedef struct s_data
     int n_time_die;
     int n_time_sleep;
     int n_time_eat;
-    long long start_time;
     pthread_mutex_t exit_lock;
     pthread_mutex_t print_lock;
     pthread_mutex_t lock;
