@@ -6,7 +6,7 @@
 /*   By: mamazzal <mamazzal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 14:03:22 by mamazzal          #+#    #+#             */
-/*   Updated: 2023/05/22 16:59:27 by mamazzal         ###   ########.fr       */
+/*   Updated: 2023/05/23 13:07:58 by mamazzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,11 @@ int main(int argc, char **argv) {
     while (philo->data->is_dead == 0) {
         count = 0;
         while (count < philo->data->n_philos) {
-            if (philo[count].is_dead) {
+            if ((get_current_time() - philo[count].last_eat) > (philo[count].data->n_time_die)) {
+                philo[count].data->is_dead = 1;
+                philo[count].is_dead = 1;
+                print_died("died", &philo[count]);
+                pthread_join(philo->philo, NULL);
                 break;
             }
             count++;
