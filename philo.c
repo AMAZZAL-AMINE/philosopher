@@ -6,7 +6,7 @@
 /*   By: mamazzal <mamazzal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 14:03:22 by mamazzal          #+#    #+#             */
-/*   Updated: 2023/05/23 16:44:04 by mamazzal         ###   ########.fr       */
+/*   Updated: 2023/05/23 16:58:05 by mamazzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,8 +72,9 @@ int main(int argc, char **argv) {
                 printf("%lld %d %s\n", get_current_time() - philo->created_at, philo->p_id, "died");
                 pthread_mutex_unlock(&philo->data->print_lock);
                 break;
+            }else {
+                pthread_mutex_unlock(&philo->data->print_lock);
             }
-            pthread_mutex_unlock(&philo->data->print_lock);
             count++;
         }
     }

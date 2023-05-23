@@ -6,14 +6,13 @@
 /*   By: mamazzal <mamazzal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/20 19:09:52 by mamazzal          #+#    #+#             */
-/*   Updated: 2023/05/23 16:40:15 by mamazzal         ###   ########.fr       */
+/*   Updated: 2023/05/23 16:48:41 by mamazzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
 int philo_todo(s_philo *philo) {
-    print_action("is thinking", philo);
     pthread_mutex_lock(&philo->data->mutex[philo->left_mutex]);
     print_action("has taken a fork", philo);
     pthread_mutex_lock(&philo->data->mutex[philo->right_mutex]);
@@ -25,6 +24,7 @@ int philo_todo(s_philo *philo) {
     pthread_mutex_unlock(&philo->data->mutex[philo->left_mutex]);
     print_action("is sleeping", philo);
     sleep_time(philo->data->n_time_sleep);
+    print_action("is thinking", philo);
     return 0;
 }
 
