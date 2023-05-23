@@ -6,7 +6,7 @@
 /*   By: mamazzal <mamazzal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 14:03:22 by mamazzal          #+#    #+#             */
-/*   Updated: 2023/05/23 15:20:36 by mamazzal         ###   ########.fr       */
+/*   Updated: 2023/05/23 16:44:04 by mamazzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ int start_dinner(char **argv, s_philo *philo) {
         philo[count].created_at = time;
         philo[count].is_dead = 0;
         pthread_create(&philo[count].philo, NULL, philo_routine, &philo[count]);
-        usleep(10);
         count++;
     }
     return 0;
@@ -66,15 +65,15 @@ int main(int argc, char **argv) {
     while (philo->data->is_dead == 0) {
         count = 0;
         while (count < philo->data->n_philos) {
+            pthread_mutex_lock(&philo->data->print_lock);
             if ((get_current_time() - philo[count].last_eat) > (philo[count].data->n_time_die)) {
-                pthread_mutex_lock(&philo->data->print_lock);
-                printf("%lld %d %s\n", get_current_time() - philo->created_at, philo->p_id, "died");
-                pthread_mutex_unlock(&philo->data->print_lock);
                 philo[count].data->is_dead = 1;
                 philo[count].is_dead = 1;
-                // pthread_join(philo->philo, NULL);
+                printf("%lld %d %s\n", get_current_time() - philo->created_at, philo->p_id, "died");
+                pthread_mutex_unlock(&philo->data->print_lock);
                 break;
             }
+            pthread_mutex_unlock(&philo->data->print_lock);
             count++;
         }
     }
