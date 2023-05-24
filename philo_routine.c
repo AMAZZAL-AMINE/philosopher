@@ -6,7 +6,7 @@
 /*   By: mamazzal <mamazzal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/20 19:09:52 by mamazzal          #+#    #+#             */
-/*   Updated: 2023/05/23 16:48:41 by mamazzal         ###   ########.fr       */
+/*   Updated: 2023/05/24 20:26:51 by mamazzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,21 @@ void *philo_routine(void *data) {
     s_philo *philo = (s_philo *)data;
     if (philo->p_id % 2 != 0) {
         print_action("is thinking", philo);
-        sleep_time(philo->data->n_time_sleep);
+        sleep_time(philo->data->n_time_eat);
     }  
-    while (philo->data->is_dead != 1)
-        philo_todo(philo);
+    while (!philo->data->is_dead) {
+        pthread_mutex_lock(&philo->data->mutex[philo->left_mutex]);
+        print_action("has taken a fork", philo);
+        pthread_mutex_lock(&philo->data->mutex[philo->right_mutex]);
+        print_action("has taken a fork", philo);
+        print_action("is eating", philo);
+        philo->last_eat = get_current_time();
+        sleep_time(philo->data->n_time_eat);
+        pthread_mutex_unlock(&philo->data->mutex[philo->right_mutex]);
+        pthread_mutex_unlock(&philo->data->mutex[philo->left_mutex]);
+        print_action("is sleeping", philo);
+        sleep_time(philo->data->n_time_sleep);
+        print_action("is thinking", philo);
+    }
     return ((void *)1);
 }
