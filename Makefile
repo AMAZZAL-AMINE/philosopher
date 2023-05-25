@@ -6,7 +6,7 @@
 #    By: mamazzal <mamazzal@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/04 14:01:18 by mamazzal          #+#    #+#              #
-#    Updated: 2023/05/20 19:11:04 by mamazzal         ###   ########.fr        #
+#    Updated: 2023/05/25 12:15:23 by mamazzal         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ SRCS = philo.c ft_atoi.c time.c print_actions.c philo_routine.c
 
 OBJ = $(SRCS:.c=.o)
 CC = cc
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -pthread
 
 all: $(NAME)
 
