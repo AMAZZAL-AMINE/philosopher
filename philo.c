@@ -6,7 +6,7 @@
 /*   By: mamazzal <mamazzal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 14:03:22 by mamazzal          #+#    #+#             */
-/*   Updated: 2023/05/24 20:27:07 by mamazzal         ###   ########.fr       */
+/*   Updated: 2023/05/25 17:58:50 by mamazzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,8 @@ int start_dinner(char **argv, s_philo *philo) {
      */
     count = 0;
     
-    while (count < philo->data->n_philos) {
         long long time = get_current_time();
+    while (count < philo->data->n_philos) {
         philo[count].created_at = time;
         philo[count].is_dead = 0;
         philo[count].p_id = count + 1;
