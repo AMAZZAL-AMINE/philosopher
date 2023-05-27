@@ -6,7 +6,7 @@
 /*   By: mamazzal <mamazzal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 13:54:10 by mamazzal          #+#    #+#             */
-/*   Updated: 2023/05/24 19:49:14 by mamazzal         ###   ########.fr       */
+/*   Updated: 2023/05/27 18:57:38 by mamazzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ typedef struct s_data
     int n_time_die;
     int n_time_sleep;
     int n_time_eat;
+    int n_must_eat;
     pthread_mutex_t exit_lock;
     pthread_mutex_t print_lock;
     pthread_mutex_t lock;
@@ -43,6 +44,7 @@ typedef struct s_philo
     long long created_at;
     long long last_eat;
     int is_dead;
+    int n_must_eat;
     s_shared_source *data;
 } s_philo;
 
@@ -55,5 +57,6 @@ int philo_todo(s_philo *philo);
 void *philo_routine(void *data);
 void print_died(char *msg, s_philo *philo);
 int check_is_die(s_philo *philo);
-
+int niga_tive(int n);
+int is_not_numbers(char **argv);
 #endif

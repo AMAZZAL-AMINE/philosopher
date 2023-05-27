@@ -6,7 +6,7 @@
 /*   By: mamazzal <mamazzal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/20 19:09:52 by mamazzal          #+#    #+#             */
-/*   Updated: 2023/05/24 20:26:51 by mamazzal         ###   ########.fr       */
+/*   Updated: 2023/05/27 18:01:44 by mamazzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,12 +35,19 @@ void *philo_routine(void *data) {
         sleep_time(philo->data->n_time_eat);
     }  
     while (!philo->data->is_dead) {
+        if (philo->n_must_eat == 0)
+            philo->data->n_must_eat--;
         pthread_mutex_lock(&philo->data->mutex[philo->left_mutex]);
         print_action("has taken a fork", philo);
         pthread_mutex_lock(&philo->data->mutex[philo->right_mutex]);
         print_action("has taken a fork", philo);
         print_action("is eating", philo);
+        if (philo->n_must_eat > 0)
+            philo->n_must_eat--;
         philo->last_eat = get_current_time();
+        if (philo->data->n_must_eat == 0) {
+            return ((void *)1);
+        }
         sleep_time(philo->data->n_time_eat);
         pthread_mutex_unlock(&philo->data->mutex[philo->right_mutex]);
         pthread_mutex_unlock(&philo->data->mutex[philo->left_mutex]);
