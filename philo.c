@@ -6,7 +6,7 @@
 /*   By: mamazzal <mamazzal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 14:03:22 by mamazzal          #+#    #+#             */
-/*   Updated: 2023/05/27 19:04:00 by mamazzal         ###   ########.fr       */
+/*   Updated: 2023/05/30 13:14:53 by mamazzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int start_dinner(char **argv, s_philo *philo, int argc) {
     philo->data->n_time_sleep = ft_atoi(argv[4]);
     philo->data->mutex = malloc(sizeof(pthread_mutex_t) * philo->data->n_philos);
     if (argc == 6) {
-        philo->data->n_must_eat = ft_atoi(argv[5]);
+        philo->data->n_must_eat = ft_atoi(argv[5]) + 1;
     }else {
         philo->data->n_must_eat = -1;
     }
@@ -49,21 +49,38 @@ int start_dinner(char **argv, s_philo *philo, int argc) {
         philo[count].left_mutex = count;
         philo[count].right_mutex = (count + 1) % philo->data->n_philos;
         philo[count].last_eat = time;
-        if (argc == 6) {
-            philo[count].n_must_eat = ft_atoi(argv[5]);
-        }else {
-            philo[count].n_must_eat = -1;
-        }
+        philo[count].meals = 0;
+        philo[count].ichb3a = 0;
         pthread_create(&philo[count].philo, NULL, philo_routine, &philo[count]);
         count++;
     }
     return 0;
 }
 
+int check_ichb3a(s_philo *philo)
+{
+    int count = 0;
+    int i = 0;
+    while (i < philo->data->n_philos) {
+        pthread_mutex_lock(&philo->data->print_lock);
+        if (philo[count].ichb3a == 1)
+            count++;
+        pthread_mutex_unlock(&philo->data->print_lock);
+        i++;
+    }
+    if (count == philo->data->n_philos)
+        return 1;
+    return 0;
+}
+
 int check_is_die(s_philo *philo) {
     int count = 0;
+    long long period;
     while (count < philo->data->n_philos) {
-        if ((get_current_time() - philo[count].last_eat) > philo->data->n_time_die) {
+        pthread_mutex_lock(&philo->data->print_lock);
+        period = get_current_time() - philo[count].last_eat;
+        pthread_mutex_unlock(&philo->data->print_lock);
+        if (period > philo->data->n_time_die) {
             philo[count].is_dead = 1;
             philo->data->is_dead = 1;
             pthread_mutex_lock(&philo->data->print_lock);
@@ -100,14 +117,20 @@ int main(int argc, char **argv) {
     }
     start_dinner(argv, philo, argc);
     while (1) {
-        if (check_is_die(philo) || philo->data->n_must_eat == 0) {
-            return 1;
+        if (check_is_die(philo) || check_ichb3a(philo)){
+          break;
         }
     }
 
     count = 0;
-    while (count < philo->data->n_philos) {
+    while (count < n_philo) {
         pthread_join(philo[count].philo, NULL);
+        count++;
+    }
+    pthread_mutex_destroy(&philo->data->print_lock);
+    count = 0;
+    while (count < n_philo) {
+        pthread_mutex_destroy(&philo[count].data->mutex[count]);
         count++;
     }
     return 0;

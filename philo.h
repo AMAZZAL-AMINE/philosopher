@@ -6,7 +6,7 @@
 /*   By: mamazzal <mamazzal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 13:54:10 by mamazzal          #+#    #+#             */
-/*   Updated: 2023/05/27 18:57:38 by mamazzal         ###   ########.fr       */
+/*   Updated: 2023/05/30 11:07:11 by mamazzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,8 @@ typedef struct s_philo
     long long created_at;
     long long last_eat;
     int is_dead;
-    int n_must_eat;
+    int meals;
+    int ichb3a;
     s_shared_source *data;
 } s_philo;
 
