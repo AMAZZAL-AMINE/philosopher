@@ -6,7 +6,7 @@
 /*   By: mamazzal <mamazzal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 14:03:22 by mamazzal          #+#    #+#             */
-/*   Updated: 2023/05/30 13:14:53 by mamazzal         ###   ########.fr       */
+/*   Updated: 2023/05/30 14:03:29 by mamazzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,44 +94,26 @@ int check_is_die(s_philo *philo) {
 }
 
 int main(int argc, char **argv) {
-    if (argc < 5 || argc > 6) {
-        printf("Error: wrong number of arguments\n");
-        return 1;
-    }
-    if (is_not_numbers(argv + 1)) {
-        printf("Error: arguments must be numbers\n");
-        return 1;
-    }
-    if (!niga_tive(ft_atoi(argv[1])) || !niga_tive(ft_atoi(argv[2]))) {
-        printf("Error: arguments must be positive numbers\n");
-        return 1;
-    }
+
     
     int count = 0;
     s_philo *philo = malloc(sizeof(s_philo) * ft_atoi(argv[1]));
     s_shared_source *source = malloc(sizeof(s_shared_source));
     int n_philo = ft_atoi(argv[1]);
+
+    if (is_error(argc, argv) == 1)
+        return 1;
     while (count < n_philo) {
         philo[count].data = source;
         count++;
     }
     start_dinner(argv, philo, argc);
-    while (1) {
-        if (check_is_die(philo) || check_ichb3a(philo)){
+    while (1)
+    {
+        if (check_is_die(philo) || check_ichb3a(philo))
           break;
-        }
-    }
-
-    count = 0;
-    while (count < n_philo) {
-        pthread_join(philo[count].philo, NULL);
-        count++;
-    }
-    pthread_mutex_destroy(&philo->data->print_lock);
-    count = 0;
-    while (count < n_philo) {
-        pthread_mutex_destroy(&philo[count].data->mutex[count]);
-        count++;
-    }
+    }   
+    if (join_and_destroy(philo) == 0)
+        return 0;
     return 0;
 }

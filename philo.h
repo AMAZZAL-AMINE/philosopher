@@ -6,7 +6,7 @@
 /*   By: mamazzal <mamazzal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 13:54:10 by mamazzal          #+#    #+#             */
-/*   Updated: 2023/05/30 11:07:11 by mamazzal         ###   ########.fr       */
+/*   Updated: 2023/05/30 14:02:02 by mamazzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,4 +60,6 @@ void print_died(char *msg, s_philo *philo);
 int check_is_die(s_philo *philo);
 int niga_tive(int n);
 int is_not_numbers(char **argv);
+int is_error(int argc, char **argv);
+int join_and_destroy(s_philo *philo);
 #endif
