@@ -6,7 +6,7 @@
 /*   By: mamazzal <mamazzal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 12:13:00 by mamazzal          #+#    #+#             */
-/*   Updated: 2023/05/11 16:39:07 by mamazzal         ###   ########.fr       */
+/*   Updated: 2023/05/30 16:27:04 by mamazzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	ft_atoi(const char *str)
 	int	ci;
 	int	fr;
 	int	isminus;
- 
+
 	ci = 0;
 	isminus = 1;
 	fr = 0;

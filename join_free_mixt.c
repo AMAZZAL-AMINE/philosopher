@@ -6,18 +6,18 @@
 /*   By: mamazzal <mamazzal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 13:47:36 by mamazzal          #+#    #+#             */
-/*   Updated: 2023/05/30 13:58:28 by mamazzal         ###   ########.fr       */
+/*   Updated: 2023/05/30 19:05:53 by mamazzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int join_and_destroy(s_philo *philo)
+int	join_and_destroy(t_philo *philo)
 {
 	int	count;
 
 	count = 0;
-	if (philo->data->n_philos ==	1)
+	if (philo->data->n_philos == 1)
 	{
 		pthread_mutex_destroy(&philo->data->print_lock);
 		pthread_mutex_destroy(&philo[0].data->mutex[0]);
@@ -38,5 +38,5 @@ int join_and_destroy(s_philo *philo)
 			count++;
 		}
 	}
-	return 0;
+	return (0);
 }
