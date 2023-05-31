@@ -6,7 +6,7 @@
 /*   By: mamazzal <mamazzal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 14:03:22 by mamazzal          #+#    #+#             */
-/*   Updated: 2023/05/30 19:05:40 by mamazzal         ###   ########.fr       */
+/*   Updated: 2023/05/31 11:33:35 by mamazzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ int	main(int argc, char **argv)
 	while (1)
 		if (check_is_die(philo) || check_ichb3a(philo))
 			break ;
-	if (join_and_destroy(philo) == 0)
-		return (0);
+	join_and_destroy(philo);
+	free_allocation(philo, source);
 	return (0);
 }

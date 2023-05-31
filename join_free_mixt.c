@@ -6,11 +6,18 @@
 /*   By: mamazzal <mamazzal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 13:47:36 by mamazzal          #+#    #+#             */
-/*   Updated: 2023/05/30 19:05:53 by mamazzal         ###   ########.fr       */
+/*   Updated: 2023/05/31 11:33:25 by mamazzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+void	free_allocation(t_philo *philo, t_shared_source *source)
+{
+	free(philo->data->mutex);
+	free(source);
+	free(philo);
+}
 
 int	join_and_destroy(t_philo *philo)
 {

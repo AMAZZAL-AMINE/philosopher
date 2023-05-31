@@ -6,7 +6,7 @@
 /*   By: mamazzal <mamazzal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 13:54:10 by mamazzal          #+#    #+#             */
-/*   Updated: 2023/05/30 19:05:57 by mamazzal         ###   ########.fr       */
+/*   Updated: 2023/05/31 11:15:28 by mamazzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,4 +65,5 @@ int			join_and_destroy(t_philo *philo);
 void		init_shared_data(t_philo *philo, int argc, char **argv);
 int			init_mutexs(t_philo *philo);
 int			init_threads(t_philo *philo);
+void		free_allocation(t_philo *philo, t_shared_source *source);
 #endif
