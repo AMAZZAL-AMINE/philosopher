@@ -6,19 +6,11 @@
 /*   By: mamazzal <mamazzal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 14:03:22 by mamazzal          #+#    #+#             */
-/*   Updated: 2023/05/31 11:33:35 by mamazzal         ###   ########.fr       */
+/*   Updated: 2023/05/31 15:31:43 by mamazzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-
-int	start_dinner(char **argv, t_philo *philo, int argc)
-{
-	init_shared_data(philo, argc, argv);
-	init_mutexs(philo);
-	init_threads(philo);
-	return (0);
-}
 
 int	check_ichb3a(t_philo *philo)
 {
@@ -66,11 +58,37 @@ int	check_is_die(t_philo *philo)
 	return (0);
 }
 
+int	main_functions(t_philo *philo, t_shared_source *source)
+{
+	if (join_and_destroy(philo) == 1)
+	{
+		printf("Error: join or destroy\n");
+		free_allocation(philo, source);
+		return (1);
+	}
+	free_allocation(philo, source);
+	return (0);
+}
+
+int	init_data_philo(char **av, t_philo *philo, t_shared_source *src)
+{
+	int	count;
+	int	n_philo;
+
+	n_philo = ft_atoi(av[1]);
+	count = 0;
+	while (count < n_philo)
+	{
+		philo[count].data = src;
+		count++;
+	}
+	return (0);
+}
+
 int	main(int argc, char **argv)
 {
 	t_shared_source	*source;
 	int				count;
-	int				n_philo;
 	t_philo			*philo;
 
 	if (is_error(argc, argv) == 1 || (argc > 6 && argc < 5))
@@ -78,17 +96,18 @@ int	main(int argc, char **argv)
 	count = 0;
 	philo = malloc(sizeof(t_philo) * ft_atoi(argv[1]));
 	source = malloc(sizeof(t_shared_source));
-	n_philo = ft_atoi(argv[1]);
-	while (count < n_philo)
+	if (!philo || !source)
+		return (1);
+	init_data_philo(argv, philo, source);
+	if (start_dinner(argv, philo, argc))
 	{
-		philo[count].data = source;
-		count++;
+		free_allocation(philo, source);
+		return (1);
 	}
-	start_dinner(argv, philo, argc);
 	while (1)
 		if (check_is_die(philo) || check_ichb3a(philo))
 			break ;
-	join_and_destroy(philo);
-	free_allocation(philo, source);
+	if (main_functions(philo, source))
+		return (1);
 	return (0);
 }

@@ -6,13 +6,13 @@
 /*   By: mamazzal <mamazzal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 16:40:52 by mamazzal          #+#    #+#             */
-/*   Updated: 2023/05/30 17:31:34 by mamazzal         ###   ########.fr       */
+/*   Updated: 2023/05/31 15:39:55 by mamazzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	init_shared_data(t_philo *philo, int argc, char **argv)
+int	init_shared_data(t_philo *philo, int argc, char **argv)
 {
 	philo->data->is_dead = 0;
 	philo->data->n_philos = ft_atoi(argv[1]);
@@ -21,16 +21,15 @@ void	init_shared_data(t_philo *philo, int argc, char **argv)
 	philo->data->n_time_sleep = ft_atoi(argv[4]);
 	philo->data->mutex = malloc(sizeof(pthread_mutex_t) * \
 		philo->data->n_philos);
+	if (!philo->data->mutex)
+		return (1);
 	if (argc == 6)
-	{
 		philo->data->n_must_eat = ft_atoi(argv[5]) + 1;
-	}
 	else
-	{
 		philo->data->n_must_eat = -1;
-	}
-	pthread_mutex_init(&philo->data->print_lock, NULL);
-	pthread_mutex_init(&philo->data->exit_lock, NULL);
+	if (pthread_mutex_init(&philo->data->print_lock, NULL))
+		return (1);
+	return (0);
 }
 
 int	init_mutexs(t_philo *philo)
@@ -40,7 +39,8 @@ int	init_mutexs(t_philo *philo)
 	count = 0;
 	while (count < philo->data->n_philos)
 	{
-		pthread_mutex_init(&philo->data->mutex[count], NULL);
+		if (pthread_mutex_init(&philo->data->mutex[count], NULL))
+			return (1);
 		count++;
 	}
 	return (0);
@@ -63,7 +63,9 @@ int	init_threads(t_philo *philo)
 		philo[count].last_eat = time;
 		philo[count].meals = 0;
 		philo[count].ichb3a = 0;
-		pthread_create(&philo[count].philo, NULL, philo_routine, &philo[count]);
+		if (pthread_create(&philo[count].philo, NULL, \
+			philo_routine, &philo[count]))
+			return (1);
 		count++;
 	}
 	return (0);

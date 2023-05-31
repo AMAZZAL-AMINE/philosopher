@@ -6,7 +6,7 @@
 /*   By: mamazzal <mamazzal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 13:54:10 by mamazzal          #+#    #+#             */
-/*   Updated: 2023/05/31 11:15:28 by mamazzal         ###   ########.fr       */
+/*   Updated: 2023/05/31 15:20:49 by mamazzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,7 @@ typedef struct s_data
 	int				n_time_sleep;
 	int				n_time_eat;
 	int				n_must_eat;
-	pthread_mutex_t	exit_lock;
 	pthread_mutex_t	print_lock;
-	pthread_mutex_t	lock;
 	pthread_mutex_t	*mutex;
 }	t_shared_source;
 
@@ -62,8 +60,10 @@ int			niga_tive(int n);
 int			is_not_numbers(char **argv);
 int			is_error(int argc, char **argv);
 int			join_and_destroy(t_philo *philo);
-void		init_shared_data(t_philo *philo, int argc, char **argv);
+int			init_shared_data(t_philo *philo, int argc, char **argv);
 int			init_mutexs(t_philo *philo);
 int			init_threads(t_philo *philo);
 void		free_allocation(t_philo *philo, t_shared_source *source);
+int			print_error(char *str);
+int			start_dinner(char **argv, t_philo *philo, int argc);
 #endif
