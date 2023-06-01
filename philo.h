@@ -6,7 +6,7 @@
 /*   By: mamazzal <mamazzal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 13:54:10 by mamazzal          #+#    #+#             */
-/*   Updated: 2023/05/31 15:20:49 by mamazzal         ###   ########.fr       */
+/*   Updated: 2023/06/01 14:27:57 by mamazzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,16 +47,16 @@ typedef struct t_philo
 	t_shared_source	*data;
 }	t_philo;
 
-int			ft_atoi(const char *str);
-long long	get_current_time(void);
-void		sleep_time(int time);
+long long	ft_atoi(const char *str);
+long		long	get_current_time(void);
+void		sleep_time(int time, t_philo *philo);
 void		print_action(char *msg, t_philo *philo);
 void		print_eat(t_philo *philo);
 int			philo_todo(t_philo *philo);
 void		*philo_routine(void *data);
 void		print_died(char *msg, t_philo *philo);
 int			check_is_die(t_philo *philo);
-int			niga_tive(int n);
+int			niga_tive(long long n);
 int			is_not_numbers(char **argv);
 int			is_error(int argc, char **argv);
 int			join_and_destroy(t_philo *philo);

@@ -6,7 +6,7 @@
 /*   By: mamazzal <mamazzal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/20 19:09:52 by mamazzal          #+#    #+#             */
-/*   Updated: 2023/05/30 18:04:14 by mamazzal         ###   ########.fr       */
+/*   Updated: 2023/06/01 12:59:21 by mamazzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	make_others_eat(t_philo *philo)
 	if (philo->p_id % 2 != 0)
 	{
 		print_action("is thinking", philo);
-		sleep_time(philo->data->n_time_eat);
+		sleep_time(philo->data->n_time_eat, philo);
 	}
 }
 
@@ -39,7 +39,7 @@ void	is_chold_eat(t_philo *philo)
 		philo->ichb3a = 1;
 		pthread_mutex_unlock(&philo->data->print_lock);
 	}
-	sleep_time(philo->data->n_time_eat);
+	sleep_time(philo->data->n_time_eat, philo);
 	pthread_mutex_unlock(&philo->data->mutex[philo->right_mutex]);
 	pthread_mutex_unlock(&philo->data->mutex[philo->left_mutex]);
 }
@@ -62,7 +62,7 @@ void	*philo_routine(void *data)
 		pthread_mutex_lock(&philo->data->print_lock);
 		pthread_mutex_unlock(&philo->data->print_lock);
 		print_action("is sleeping", philo);
-		sleep_time(philo->data->n_time_sleep);
+		sleep_time(philo->data->n_time_sleep, philo);
 		print_action("is thinking", philo);
 	}
 	return ((void *)1);

@@ -6,7 +6,7 @@
 /*   By: mamazzal <mamazzal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 14:37:26 by mamazzal          #+#    #+#             */
-/*   Updated: 2023/05/31 14:38:35 by mamazzal         ###   ########.fr       */
+/*   Updated: 2023/06/01 14:18:17 by mamazzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,6 @@
 
 int	print_error(char *str)
 {
-	printf("%s\n", str);
+	printf("%s", str);
 	return (1);
 }
