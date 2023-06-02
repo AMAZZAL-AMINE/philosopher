@@ -6,11 +6,11 @@
 /*   By: mamazzal <mamazzal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/20 19:09:52 by mamazzal          #+#    #+#             */
-/*   Updated: 2023/06/01 12:59:21 by mamazzal         ###   ########.fr       */
+/*   Updated: 2023/06/02 12:58:30 by mamazzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo.h"
+#include "philo.h" 
 
 void	make_others_eat(t_philo *philo)
 {

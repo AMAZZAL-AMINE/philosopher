@@ -6,7 +6,7 @@
 /*   By: mamazzal <mamazzal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 13:31:25 by mamazzal          #+#    #+#             */
-/*   Updated: 2023/06/01 14:27:15 by mamazzal         ###   ########.fr       */
+/*   Updated: 2023/06/02 15:13:58 by mamazzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,8 @@ int	is_not_numbers(char **argv)
 
 int	is_error(int argc, char **argv)
 {
+	int	count;
+
 	if (argc < 5 || argc > 6)
 		return (print_error("Error: Wrong number of arguments\n"));
 	if (is_not_numbers(argv + 1))
@@ -52,7 +54,12 @@ int	is_error(int argc, char **argv)
 		return (print_error("Error: Range Too big\n"));
 	if (argc == 6 && ft_atoi(argv[5]) > 2147483647)
 		return (print_error("Error: Range Too big\n"));
-	if (!niga_tive(ft_atoi(argv[1])) || !niga_tive(ft_atoi(argv[2])))
-		return (print_error("Error: arguments must be positive numbers\n"));
+	count = 1;
+	while (argv[count])
+	{
+		if (!niga_tive(ft_atoi(argv[count])))
+			return (print_error("Error: arguments must be positive numbers\n"));
+		count++;
+	}
 	return (0);
 }

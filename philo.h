@@ -6,7 +6,7 @@
 /*   By: mamazzal <mamazzal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 13:54:10 by mamazzal          #+#    #+#             */
-/*   Updated: 2023/06/01 14:27:57 by mamazzal         ###   ########.fr       */
+/*   Updated: 2023/06/02 15:20:59 by mamazzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,6 @@
 # include <stdlib.h>
 # include <pthread.h>
 # include <sys/time.h>
-# include <string.h>
-# include <stdbool.h>
 
 typedef struct s_data
 {
